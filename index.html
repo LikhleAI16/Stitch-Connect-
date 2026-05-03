@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>StitchConnect – Find Your Perfect Tailor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#faf6f0;--warm:#f5ede0;--gold:#c9922a;--gold-light:#e8b84b;--gold-pale:#fdf3e0;
+  --dark:#1a1208;--brown:#5c3d1e;--green-wa:#25D366;--green-wa-dark:#128C7E;
+  --text:#3a2a10;--muted:#8a7060;--card:#fffdf8;--border:#e8dcc8;
+  --shadow:0 8px 40px rgba(92,61,30,0.10);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(250,246,240,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:900;color:var(--dark);cursor:pointer}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center}
+.nav-links a{text-decoration:none;font-size:.88rem;font-weight:500;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-btn{background:var(--dark);color:var(--cream)!important;padding:.5rem 1.3rem;border-radius:50px;font-weight:600!important;transition:background .2s!important}
+.nav-btn:hover{background:var(--gold)!important;color:var(--dark)!important}
+.nav-register{background:var(--green-wa);color:white!important;padding:.5rem 1.3rem;border-radius:50px;font-weight:600!important;transition:background .2s!important}
+.nav-register:hover{background:var(--green-wa-dark)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(201,146,42,.13) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 85% 85%,rgba(92,61,30,.08) 0%,transparent 60%)}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--warm);border:1px solid var(--border);border-radius:50px;padding:.4rem 1rem;font-size:.82rem;font-weight:500;color:var(--brown);margin-bottom:1.8rem;animation:fadeUp .6s ease both}
+.hero-badge .dot{width:7px;height:7px;background:var(--green-wa);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,6.5vw,5.2rem);font-weight:900;line-height:1.05;color:var(--dark);max-width:820px;animation:fadeUp .6s .1s ease both}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero p{font-size:1.1rem;color:var(--muted);max-width:540px;margin:1.5rem auto 2.5rem;line-height:1.7;font-weight:300;animation:fadeUp .6s .2s ease both}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeUp .6s .3s ease both}
+.btn-primary{background:var(--dark);color:var(--cream);padding:.85rem 2rem;border-radius:50px;font-size:.95rem;font-weight:600;border:none;cursor:pointer;transition:all .25s;text-decoration:none;display:inline-block}
+.btn-primary:hover{background:var(--gold);color:var(--dark);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--dark);padding:.85rem 2rem;border-radius:50px;font-size:.95rem;font-weight:600;border:2px solid var(--border);cursor:pointer;transition:all .25s;text-decoration:none;display:inline-block}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;animation:fadeUp .6s .4s ease both;flex-wrap:wrap;justify-content:center}
+.stat{text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--dark)}
+.stat-label{font-size:.78rem;color:var(--muted);margin-top:.2rem}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION */
+.section{padding:5rem 2rem;max-width:1150px;margin:0 auto}
+.section-label{font-size:.78rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3vw,2.4rem);font-weight:700;color:var(--dark);margin-bottom:2rem}
+
+/* SEARCH */
+.search-wrap{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:1rem 1.2rem;box-shadow:var(--shadow);margin-bottom:1.5rem;display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
+.search-wrap input,.search-wrap select{flex:1;min-width:130px;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);outline:none;padding:.3rem .4rem}
+.search-wrap select{cursor:pointer;color:var(--muted)}
+.sdiv{width:1px;background:var(--border);align-self:stretch;min-height:26px}
+.search-btn{background:var(--gold);color:white;border:none;border-radius:10px;padding:.6rem 1.4rem;font-weight:600;font-size:.88rem;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.search-btn:hover{background:var(--dark)}
+
+/* TAGS */
+.filter-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.tag{padding:.35rem .95rem;border-radius:50px;border:1.5px solid var(--border);background:var(--card);font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s;color:var(--muted)}
+.tag:hover,.tag.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+
+/* SORT BAR */
+.sort-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem;flex-wrap:wrap;gap:.5rem}
+.result-count{font-size:.87rem;color:var(--muted)}
+.result-count strong{color:var(--dark)}
+.sort-sel{border:1.5px solid var(--border);background:var(--card);border-radius:8px;padding:.38rem .75rem;font-family:'DM Sans',sans-serif;font-size:.83rem;color:var(--text);cursor:pointer;outline:none}
+
+/* GRID */
+.tailor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(305px,1fr));gap:1.4rem}
+
+/* CARD */
+.tailor-card{background:var(--card);border:1.5px solid var(--border);border-radius:22px;overflow:hidden;transition:all .3s;cursor:pointer}
+.tailor-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(92,61,30,.13);border-color:var(--gold)}
+.card-top{position:relative;height:150px;background:linear-gradient(135deg,var(--warm) 0%,#e8d5b5 100%);display:flex;align-items:center;justify-content:center}
+.t-avatar{width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;color:white;border:4px solid white;box-shadow:0 4px 15px rgba(0,0,0,.15)}
+.badge-spec{position:absolute;top:11px;left:11px;background:var(--dark);color:var(--gold-light);font-size:.67rem;font-weight:600;padding:.2rem .6rem;border-radius:50px}
+.avail-b{position:absolute;top:11px;right:11px;display:flex;align-items:center;gap:.28rem;background:white;padding:.2rem .6rem;border-radius:50px;font-size:.68rem;font-weight:600}
+.dot-av{width:6px;height:6px;border-radius:50%}
+.av-yes .dot-av{background:#22c55e}.av-yes{color:#16a34a}
+.av-no .dot-av{background:#f59e0b}.av-no{color:#d97706}
+.ver-b{position:absolute;bottom:10px;right:10px;background:#3498db;color:white;font-size:.62rem;font-weight:700;padding:.18rem .55rem;border-radius:50px}
+.card-body{padding:1rem 1.25rem .85rem}
+.t-name{font-family:'Playfair Display',serif;font-size:1.12rem;font-weight:700;color:var(--dark);margin-bottom:.12rem}
+.t-loc-mini{font-size:.78rem;color:var(--muted);margin-bottom:.6rem}
+
+/* LOCATION PILLS */
+.loc-pills{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.7rem}
+.lp{font-size:.65rem;font-weight:600;padding:.15rem .5rem;border-radius:50px;border:1px solid}
+.lp.state{background:#e8f4fd;border-color:#bee3f8;color:#2b6cb0}
+.lp.dist{background:#fefce8;border-color:#fde68a;color:#92400e}
+.lp.pin{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
+.lp.area{background:var(--gold-pale);border-color:#f6d860;color:#7c4a00}
+
+.spec-row{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.75rem}
+.spec-tag{background:var(--warm);color:var(--brown);font-size:.68rem;font-weight:500;padding:.16rem .5rem;border-radius:50px}
+.meta-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}
+.rating{display:flex;align-items:center;gap:.28rem;font-size:.82rem;font-weight:600;color:var(--dark)}
+.stars{color:var(--gold);letter-spacing:-2px}
+.price-tag{font-size:.8rem;color:var(--muted)}
+.price-tag strong{color:var(--gold);font-size:.9rem}
+.exp-tag{font-size:.73rem;color:var(--muted);margin-bottom:.8rem}
+
+/* CARD ACTIONS */
+.card-actions{display:flex;gap:.5rem;border-top:1px solid var(--border);padding:.8rem 1.15rem}
+.btn-view{flex:1;background:var(--dark);color:var(--cream);border:none;border-radius:10px;padding:.55rem;font-size:.82rem;font-weight:600;cursor:pointer;transition:background .2s;font-family:'DM Sans',sans-serif}
+.btn-view:hover{background:var(--brown)}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:.32rem;background:var(--green-wa);color:white;border:none;border-radius:10px;padding:.55rem .9rem;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .25s;text-decoration:none;font-family:'DM Sans',sans-serif;overflow:hidden;position:relative}
+.btn-wa::before{content:'';position:absolute;inset:0;background:var(--green-wa-dark);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.btn-wa:hover::before{transform:scaleX(1)}
+.btn-wa:hover{transform:scale(1.03);box-shadow:0 4px 18px rgba(37,211,102,.38)}
+.btn-wa svg,.btn-wa span{position:relative;z-index:1}
+.wa-s{width:15px;height:15px;fill:white}
+
+/* COMPARE BAR */
+.cmp-bar{position:fixed;bottom:0;left:0;right:0;z-index:400;background:var(--dark);color:var(--cream);padding:.85rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;transform:translateY(100%);transition:transform .35s;border-top:2px solid var(--gold)}
+.cmp-bar.show{transform:translateY(0)}
+.cb-title{font-weight:700;font-size:.88rem;color:var(--gold-light);white-space:nowrap}
+.cmp-slots{display:flex;gap:.6rem;flex:1;flex-wrap:wrap}
+.cslot{background:rgba(255,255,255,.07);border:1.5px dashed rgba(255,255,255,.2);border-radius:10px;padding:.38rem .85rem;font-size:.78rem;min-width:110px;position:relative;color:rgba(255,255,255,.5)}
+.cslot.filled{border-color:var(--gold);background:rgba(201,146,42,.15);color:var(--gold-light);font-weight:600}
+.rm-c{position:absolute;top:-7px;right:-7px;width:18px;height:18px;background:#e74c3c;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.58rem;font-weight:700;color:white;border:none}
+.btn-do-cmp{background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:.52rem 1.2rem;font-weight:700;font-size:.83rem;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.btn-do-cmp:disabled{opacity:.35;cursor:not-allowed}
+.btn-clr-cmp{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.55);border-radius:10px;padding:.48rem .9rem;font-size:.8rem;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:600;background:rgba(26,18,8,.76);backdrop-filter:blur(7px);align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border-radius:26px;max-width:560px;width:100%;max-height:92vh;overflow-y:auto;border:1.5px solid var(--border);animation:mIn .3s ease}
+@keyframes mIn{from{opacity:0;transform:scale(.91) translateY(22px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.m-hdr{position:relative;height:170px;background:linear-gradient(135deg,#e8d5b5 0%,#d4b896 100%);display:flex;align-items:center;justify-content:center;border-radius:26px 26px 0 0}
+.m-close{position:absolute;top:1rem;right:1rem;background:white;border:none;border-radius:50%;width:33px;height:33px;cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center}
+.m-close:hover{background:var(--warm)}
+.m-av{width:86px;height:86px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:white;border:5px solid white;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.m-body{padding:1.6rem}
+.m-name{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--dark);margin-bottom:.18rem}
+.m-sub{color:var(--muted);font-size:.84rem;margin-bottom:1.2rem;line-height:1.55}
+/* loc table */
+.loc-tbl{width:100%;border-collapse:collapse;margin-bottom:1.2rem;font-size:.82rem;border-radius:12px;overflow:hidden}
+.loc-tbl th{background:var(--warm);color:var(--brown);font-weight:700;padding:.48rem .75rem;text-align:left;border:1px solid var(--border)}
+.loc-tbl td{padding:.48rem .75rem;border:1px solid var(--border);color:var(--text)}
+.loc-tbl tr:last-child td:first-child{background:#e8f4fd;color:#2b6cb0;font-weight:600}
+.loc-tbl tr:last-child td:nth-child(2){background:#fefce8;color:#92400e;font-weight:600}
+.loc-tbl tr:last-child td:nth-child(3){background:#f0fdf4;color:#166534;font-weight:600}
+.loc-tbl tr:last-child td:nth-child(4){background:var(--gold-pale);color:#7c4a00;font-weight:600}
+/* info grid */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:1.2rem}
+.i-box{background:var(--warm);border-radius:12px;padding:.82rem 1rem}
+.i-lbl{font-size:.68rem;color:var(--muted);font-weight:500;margin-bottom:.18rem;text-transform:uppercase;letter-spacing:.05em}
+.i-val{font-size:.92rem;font-weight:700;color:var(--dark)}
+/* sec title */
+.sec-ttl{font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.65rem;margin-top:1.1rem}
+/* services */
+.svc-list{display:flex;flex-direction:column;gap:.42rem;margin-bottom:.5rem}
+.svc-item{display:flex;align-items:center;justify-content:space-between;background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:.52rem .88rem;font-size:.84rem}
+.svc-item span:last-child{font-weight:700;color:var(--gold)}
+/* reviews */
+.rev-list{display:flex;flex-direction:column;gap:.65rem;margin-bottom:.5rem}
+.rev-item{background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:.75rem .95rem}
+.rev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.28rem}
+.rev-author{font-weight:600;font-size:.83rem}
+.rev-stars{color:var(--gold);font-size:.82rem}
+.rev-text{font-size:.8rem;color:var(--muted);line-height:1.5}
+/* booking */
+.bk-form{background:var(--warm);border-radius:14px;padding:1rem;margin-bottom:1.2rem}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.65rem}
+.fr.one{grid-template-columns:1fr}
+.fg label{display:block;font-size:.7rem;font-weight:700;color:var(--brown);margin-bottom:.28rem;text-transform:uppercase;letter-spacing:.04em}
+.fg input,.fg select,.fg textarea{width:100%;border:1.5px solid var(--border);background:white;border-radius:9px;padding:.52rem .78rem;font-family:'DM Sans',sans-serif;font-size:.86rem;color:var(--text);outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold)}
+.fg textarea{resize:vertical;min-height:65px}
+.btn-bk{width:100%;background:var(--dark);color:var(--cream);border:none;border-radius:12px;padding:.82rem;font-size:.93rem;font-weight:700;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif;margin-top:.28rem}
+.btn-bk:hover{background:var(--gold);color:var(--dark)}
+/* modal actions */
+.m-actions{display:flex;gap:.65rem}
+.m-wa{flex:1;display:flex;align-items:center;justify-content:center;gap:.45rem;background:var(--green-wa);color:white;border:none;border-radius:14px;padding:.88rem;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .25s;text-decoration:none;font-family:'DM Sans',sans-serif}
+.m-wa:hover{background:var(--green-wa-dark);transform:translateY(-2px);box-shadow:0 6px 25px rgba(37,211,102,.4)}
+.m-cmp{flex:1;background:var(--warm);color:var(--brown);border:1.5px solid var(--border);border-radius:14px;padding:.88rem;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .25s;font-family:'DM Sans',sans-serif}
+.m-cmp:hover{background:var(--gold-pale);border-color:var(--gold)}
+
+/* COMPARE TABLE MODAL */
+.cmp-modal-inner{max-width:920px;padding:0}
+.cmp-tbl{width:100%;border-collapse:collapse;font-size:.82rem}
+.cmp-tbl th{background:var(--dark);color:var(--cream);padding:.68rem .95rem;text-align:left;font-weight:600}
+.cmp-tbl td{padding:.62rem .95rem;border-bottom:1px solid var(--border);vertical-align:top}
+.cmp-tbl tr:nth-child(even) td{background:#fdf8f2}
+.wa-link{display:inline-flex;align-items:center;gap:.3rem;background:var(--green-wa);color:white;padding:.32rem .75rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:.78rem;transition:background .2s}
+.wa-link:hover{background:var(--green-wa-dark)}
+
+/* REGISTER MODAL */
+.reg-inner{max-width:520px}
+.reg-f{display:flex;flex-direction:column;gap:.75rem}
+.reg-row{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+.reg-f .fg input,.reg-f .fg select{width:100%;border:1.5px solid var(--border);background:var(--cream);border-radius:10px;padding:.58rem .88rem;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--text);outline:none;transition:border-color .2s}
+.reg-f .fg input:focus,.reg-f .fg select:focus{border-color:var(--gold)}
+.reg-f .fg label{display:block;font-size:.7rem;font-weight:700;color:var(--brown);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.04em}
+
+/* HOW IT WORKS */
+.how-sec{background:var(--dark);padding:5rem 2rem;text-align:center}
+.how-sec .section-label{color:var(--gold-light)}
+.how-sec .section-title{color:var(--cream)}
+.steps{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;max-width:950px;margin:3rem auto 0}
+.step{flex:1;min-width:185px;max-width:225px;text-align:center}
+.step-num{width:52px;height:52px;border-radius:50%;background:rgba(201,146,42,.15);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--gold);margin:0 auto 1rem}
+.step h3{font-family:'Playfair Display',serif;color:var(--cream);font-size:.98rem;margin-bottom:.48rem}
+.step p{color:rgba(250,246,240,.48);font-size:.81rem;line-height:1.6}
+
+/* TESTIMONIALS */
+.testi-sec{padding:5rem 2rem;background:var(--warm)}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:1.2rem;max-width:1000px;margin:0 auto}
+.t-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:1.35rem}
+.t-stars{color:var(--gold);font-size:.95rem;margin-bottom:.65rem}
+.t-text{font-size:.86rem;line-height:1.65;color:var(--text);margin-bottom:.95rem;font-style:italic}
+.t-author{display:flex;align-items:center;gap:.65rem}
+.t-av{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;color:white}
+.t-name{font-weight:600;font-size:.83rem;color:var(--dark)}
+.t-place{font-size:.73rem;color:var(--muted)}
+
+/* FOOTER */
+footer{background:var(--dark);padding:3rem 2rem 1.5rem}
+.ft-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+.ft-brand .logo{font-size:1.3rem;margin-bottom:.65rem;display:block}
+.ft-brand p{font-size:.81rem;line-height:1.6;color:rgba(250,246,240,.38);max-width:255px}
+.ft-col h4{color:var(--gold-light);font-size:.77rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.9rem}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+.ft-col ul a{color:rgba(250,246,240,.42);text-decoration:none;font-size:.81rem;transition:color .2s}
+.ft-col ul a:hover{color:var(--gold-light)}
+.ft-bot{border-top:1px solid rgba(201,146,42,.2);padding-top:1.1rem;text-align:center;color:rgba(250,246,240,.35);font-size:.8rem}
+
+/* TAILOR LIST TABLE */
+.tailor-list-section{padding:3rem 2rem 1rem;max-width:1150px;margin:0 auto}
+.tl-table{width:100%;border-collapse:collapse;font-size:.82rem;background:var(--card);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.tl-table th{background:var(--dark);color:var(--gold-light);padding:.65rem 1rem;text-align:left;font-weight:600;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase}
+.tl-table td{padding:.65rem 1rem;border-bottom:1px solid var(--border);vertical-align:middle}
+.tl-table tr:hover td{background:var(--warm)}
+.tl-av-dot{display:inline-flex;align-items:center;gap:.3rem;font-size:.75rem;font-weight:600}
+.tl-wa{display:inline-flex;align-items:center;gap:.28rem;background:var(--green-wa);color:white;padding:.28rem .65rem;border-radius:7px;text-decoration:none;font-weight:600;font-size:.75rem;transition:background .2s}
+.tl-wa:hover{background:var(--green-wa-dark)}
+
+/* TOAST */
+.toast{position:fixed;bottom:5.5rem;right:2rem;background:var(--green-wa);color:white;padding:.72rem 1.35rem;border-radius:50px;font-weight:600;font-size:.87rem;z-index:9000;transform:translateY(80px);opacity:0;transition:all .3s;display:flex;align-items:center;gap:.45rem;box-shadow:0 6px 25px rgba(37,211,102,.4)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.dark{background:var(--dark);box-shadow:0 6px 25px rgba(0,0,0,.3)}
+.toast.err{background:#e74c3c;box-shadow:0 6px 25px rgba(231,76,60,.4)}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--cream);flex-direction:column;padding:1.5rem;gap:1rem;border-bottom:1px solid var(--border);z-index:100}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .hero-stats{gap:1.5rem}
+  .info-grid,.fr,.reg-row{grid-template-columns:1fr}
+  .ft-inner{grid-template-columns:1fr}
+  .m-actions{flex-direction:column}
+  .tl-table{font-size:.72rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="logo" onclick="window.scrollTo(0,0)">Stitch<span>Connect</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#search">Find Tailors</a></li>
+    <li><a href="#tailorList">Tailor List</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#testi">Reviews</a></li>
+    <li><a href="#" onclick="openReg();return false" class="nav-register">Join as Tailor</a></li>
+    <li><a href="#search" class="nav-btn">Find Now</a></li>
+  </ul>
+  <div class="hamburger" id="ham" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge"><span class="dot"></span>Serving North Bengal &amp; Surroundings</div>
+  <h1>Find the Best <em>Tailor</em><br>Near You — Instantly</h1>
+  <p>Browse skilled tailors across Mothabari, Siliguri, Islampur &amp; beyond. Compare prices, book slots, and connect directly on WhatsApp in one tap.</p>
+  <div class="hero-actions">
+    <a href="#search" class="btn-primary">Find a Tailor →</a>
+    <a href="#" onclick="openReg();return false" class="btn-outline">Register as Tailor</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Skilled Tailors</div></div>
+    <div class="stat"><div class="stat-num">8</div><div class="stat-label">Areas Covered</div></div>
+    <div class="stat"><div class="stat-num">4.7★</div><div class="stat-label">Avg. Rating</div></div>
+    <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Happy Customers</div></div>
+  </div>
+</section>
+
+<!-- ═══ SEARCH ═══ -->
+<section class="section" id="search">
+  <div class="section-label">Discover</div>
+  <div class="section-title">Browse Tailors in Your Area</div>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="🔍  Search by name or specialty…" oninput="filter()"/>
+    <div class="sdiv"></div>
+    <select id="distFilter" onchange="filter()">
+      <option value="">🏙 All Districts</option>
+      <option>Darjeeling</option><option>Jalpaiguri</option>
+      <option>Uttar Dinajpur</option><option>Cooch Behar</option>
+    </select>
+    <div class="sdiv"></div>
+    <select id="areaFilter" onchange="filter()">
+      <option value="">📍 All Areas</option>
+      <option>Mothabari</option><option>Siliguri</option><option>Islampur</option>
+      <option>Jalpaiguri Town</option><option>Matigara</option><option>Bagdogra</option>
+      <option>Cooch Behar Town</option><option>Dalkhola</option><option>Dhupguri</option>
+    </select>
+    <div class="sdiv"></div>
+    <select id="priceFilter" onchange="filter()">
+      <option value="">💰 Any Price</option>
+      <option value="low">Under ₹300</option>
+      <option value="mid">₹300–₹700</option>
+      <option value="high">₹700+</option>
+    </select>
+    <button class="search-btn" onclick="filter()">Search</button>
+  </div>
+  <div class="filter-tags" id="fTags">
+    <span class="tag active" onclick="setSpec(this,'')">All</span>
+    <span class="tag" onclick="setSpec(this,'Blouse')">Blouse</span>
+    <span class="tag" onclick="setSpec(this,'Kurta')">Kurta</span>
+    <span class="tag" onclick="setSpec(this,'Suit')">Suit</span>
+    <span class="tag" onclick="setSpec(this,'Lehenga')">Lehenga</span>
+    <span class="tag" onclick="setSpec(this,'Salwar')">Salwar Kameez</span>
+    <span class="tag" onclick="setSpec(this,'Sherwani')">Sherwani</span>
+    <span class="tag" onclick="setSpec(this,'Saree')">Saree Blouse</span>
+    <span class="tag" onclick="setSpec(this,'Kids')">Kids Wear</span>
+  </div>
+  <div class="sort-bar">
+    <div class="result-count" id="rCount"></div>
+    <select class="sort-sel" onchange="sort(this.value)">
+      <option value="rating">⭐ Top Rated</option>
+      <option value="price_low">💰 Price: Low→High</option>
+      <option value="price_high">💰 Price: High→Low</option>
+      <option value="exp">⏳ Most Experienced</option>
+    </select>
+  </div>
+  <div class="tailor-grid" id="grid"></div>
+</section>
+
+<!-- ═══ TAILOR LIST TABLE ═══ -->
+<section class="tailor-list-section" id="tailorList">
+  <div class="section-label">Quick Reference</div>
+  <div class="section-title" style="margin-bottom:1.3rem">All Tailors — At a Glance</div>
+  <div style="overflow-x:auto">
+    <table class="tl-table" id="listTable"></table>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="how-sec" id="how">
+  <div class="section-label">Simple &amp; Fast</div>
+  <div class="section-title">How StitchConnect Works</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><h3>Search Nearby</h3><p>Filter by district, area, specialty &amp; price to find tailors close to you.</p></div>
+    <div class="step"><div class="step-num">2</div><h3>Compare Tailors</h3><p>Add up to 2 tailors and compare their prices, ratings &amp; services side-by-side.</p></div>
+    <div class="step"><div class="step-num">3</div><h3>Book a Slot</h3><p>Fill your measurements and preferred date directly on the profile page.</p></div>
+    <div class="step"><div class="step-num">4</div><h3>Chat on WhatsApp</h3><p>Tap WhatsApp and instantly start chatting — no middleman, no delay.</p></div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="testi-sec" id="testi">
+  <div style="max-width:1000px;margin:0 auto">
+    <div class="section-label" style="text-align:center">What Customers Say</div>
+    <div class="section-title" style="text-align:center;margin-bottom:2.2rem">Loved by Families Across the Region</div>
+    <div class="testi-grid">
+      <div class="t-card"><div class="t-stars">★★★★★</div><div class="t-text">"Found Razia Begum through StitchConnect. She stitched my daughter's lehenga perfectly. The WhatsApp button made it so easy to reach her!"</div><div class="t-author"><div class="t-av">S</div><div><div class="t-name">Salma Khatun</div><div class="t-place">Mothabari, Uttar Dinajpur</div></div></div></div>
+      <div class="t-card"><div class="t-stars">★★★★★</div><div class="t-text">"Atif bhai stitched my sherwani for Eid. Perfect fit and affordable price. Booked directly from the website and he confirmed on WhatsApp in minutes."</div><div class="t-author"><div class="t-av">R</div><div><div class="t-name">Rahul Sharma</div><div class="t-place">Siliguri, Darjeeling</div></div></div></div>
+      <div class="t-card"><div class="t-stars">★★★★☆</div><div class="t-text">"Before this app I travelled 20km for a good tailor. Now I just filter by my area. Sunita Devi is amazing for blouses. Found her in 2 minutes!"</div><div class="t-author"><div class="t-av">P</div><div><div class="t-name">Puja Roy</div><div class="t-place">Matigara, Darjeeling</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-brand">
+      <span class="logo">Stitch<span>Connect</span></span>
+      <p>Connecting rural customers with skilled local tailors across North Bengal and beyond.</p>
+    </div>
+    <div class="ft-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#search">Find Tailors</a></li>
+        <li><a href="#tailorList">Tailor List</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#testi">Reviews</a></li>
+        <li><a href="#" onclick="openReg();return false">Register as Tailor</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Areas Covered</h4>
+      <ul>
+        <li><a href="#">Mothabari</a></li>
+        <li><a href="#">Siliguri</a></li>
+        <li><a href="#">Islampur</a></li>
+        <li><a href="#">Jalpaiguri Town</a></li>
+        <li><a href="#">Matigara</a></li>
+        <li><a href="#">Bagdogra</a></li>
+        <li><a href="#">Cooch Behar Town</a></li>
+        <li><a href="#">Dalkhola</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bot">Made with ❤️ for rural India &nbsp;·&nbsp; <strong style="color:var(--gold-light)">StitchConnect</strong> © 2026 &nbsp;·&nbsp; Admin: Atif Sheikh</div>
+</footer>
+
+<!-- ═══ TAILOR DETAIL MODAL ═══ -->
+<div class="modal-overlay" id="tailorMod" onclick="closeOut(event,'tailorMod')">
+  <div class="modal">
+    <div class="m-hdr"><button class="m-close" onclick="closeM('tailorMod')">✕</button><div class="m-av" id="mAv"></div></div>
+    <div class="m-body">
+      <div class="m-name" id="mName"></div>
+      <div class="m-sub" id="mBio"></div>
+      <div class="sec-ttl">📍 Location Details</div>
+      <table class="loc-tbl">
+        <tr><th>State</th><th>District</th><th>PIN Code</th><th>Area</th></tr>
+        <tr><td id="mSt"></td><td id="mDi"></td><td id="mPi"></td><td id="mAr"></td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="i-box"><div class="i-lbl">Rating</div><div class="i-val" id="mRat"></div></div>
+        <div class="i-box"><div class="i-lbl">Experience</div><div class="i-val" id="mEx"></div></div>
+        <div class="i-box"><div class="i-lbl">Price Range</div><div class="i-val" id="mPr"></div></div>
+        <div class="i-box"><div class="i-lbl">Status</div><div class="i-val" id="mSt2"></div></div>
+      </div>
+      <div class="sec-ttl">🧵 Services &amp; Pricing</div>
+      <div class="svc-list" id="mSvcs"></div>
+      <div class="sec-ttl">⭐ Customer Reviews</div>
+      <div class="rev-list" id="mRevs"></div>
+      <div class="sec-ttl">📅 Book an Appointment</div>
+      <div class="bk-form">
+        <div class="fr">
+          <div class="fg"><label>Your Name</label><input id="bkN" placeholder="e.g. Salma Khatun"/></div>
+          <div class="fg"><label>Phone Number</label><input id="bkP" type="tel" placeholder="e.g. 9876543210"/></div>
+        </div>
+        <div class="fr">
+          <div class="fg"><label>Service Needed</label><select id="bkS"><option value="">Select service</option></select></div>
+          <div class="fg"><label>Preferred Date</label><input id="bkD" type="date"/></div>
+        </div>
+        <div class="fr one">
+          <div class="fg"><label>Measurement Notes</label><textarea id="bkNote" placeholder="e.g. Chest 36, Waist 30 — or any special instructions"></textarea></div>
+        </div>
+        <button class="btn-bk" onclick="submitBk()">📲 Confirm Booking via WhatsApp</button>
+      </div>
+      <div class="m-actions">
+        <a class="m-wa" id="mWa" href="#" target="_blank" onclick="showT('Opening WhatsApp…','')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat on WhatsApp
+        </a>
+        <button class="m-cmp" id="mCmpBtn" onclick="addCmp()">⚖️ Add to Compare</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ COMPARE MODAL ═══ -->
+<div class="modal-overlay" id="cmpMod" onclick="closeOut(event,'cmpMod')">
+  <div class="modal cmp-modal-inner" style="max-width:920px;padding:0">
+    <div style="padding:1.3rem 1.7rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--dark)">⚖️ Compare Tailors</div>
+      <button class="m-close" style="position:static" onclick="closeM('cmpMod')">✕</button>
+    </div>
+    <div style="padding:1.4rem;overflow-x:auto"><table class="cmp-tbl" id="cmpTbl"></table></div>
+  </div>
+</div>
+
+<!-- ═══ REGISTER MODAL ═══ -->
+<div class="modal-overlay" id="regMod" onclick="closeOut(event,'regMod')">
+  <div class="modal reg-inner">
+    <div class="m-hdr" style="height:115px;border-radius:26px 26px 0 0">
+      <button class="m-close" onclick="closeM('regMod')">✕</button>
+      <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--dark)">🧵 Join as a Tailor</div>
+    </div>
+    <div class="m-body">
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6">Fill in your details — your registration will be sent to the admin via WhatsApp and your profile will be added soon.</p>
+      <div class="reg-f">
+        <div class="reg-row">
+          <div class="fg"><label>Full Name</label><input id="rN" placeholder="Your full name"/></div>
+          <div class="fg"><label>WhatsApp Number</label><input id="rPh" type="tel" placeholder="91XXXXXXXXXX"/></div>
+        </div>
+        <div class="reg-row">
+          <div class="fg"><label>State</label><input id="rSt" value="West Bengal"/></div>
+          <div class="fg"><label>District</label><select id="rDi"><option>Darjeeling</option><option>Jalpaiguri</option><option>Uttar Dinajpur</option><option>Cooch Behar</option></select></div>
+        </div>
+        <div class="reg-row">
+          <div class="fg"><label>PIN Code</label><input id="rPi" placeholder="e.g. 733210"/></div>
+          <div class="fg"><label>Area / Village</label><input id="rAr" placeholder="e.g. Mothabari"/></div>
+        </div>
+        <div class="fg"><label>Specialties (comma-separated)</label><input id="rSp" placeholder="e.g. Blouse, Salwar Kameez, Lehenga"/></div>
+        <div class="reg-row">
+          <div class="fg"><label>Price Range</label><input id="rPr" placeholder="e.g. ₹150 – ₹700"/></div>
+          <div class="fg"><label>Years of Experience</label><input id="rEx" type="number" placeholder="e.g. 8"/></div>
+        </div>
+        <button class="btn-bk" onclick="submitReg()">📲 Register &amp; Get Listed</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ COMPARE BAR ═══ -->
+<div class="cmp-bar" id="cmpBar">
+  <span class="cb-title">⚖️ Compare</span>
+  <div class="cmp-slots" id="cmpSlots">
+    <div class="cslot" id="cs0">Empty slot 1</div>
+    <div class="cslot" id="cs1">Empty slot 2</div>
+  </div>
+  <button class="btn-do-cmp" id="btnDoCmp" onclick="doCmp()" disabled>Compare Now</button>
+  <button class="btn-clr-cmp" onclick="clearCmp()">Clear All</button>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════
+   ALL WHATSAPP → ATIF: 919475840763
+══════════════════════════════════════════ */
+const WA = "919475840763";
+
+const tailors = [
+  {
+    id:1, name:"Atif Sheikh", initials:"AS", color:"#c9922a",
+    state:"West Bengal", district:"Uttar Dinajpur", pin:"733210", area:"Mothabari",
+    specialty:["Sherwani","Suit","Kurta"], available:true, verified:true,
+    rating:4.9, reviews:210, exp:10, expLabel:"10 Years",
+    priceRange:"₹250–₹1500", priceNum:250, priceLevel:"high", whatsapp:WA,
+    bio:"Expert in formal menswear, wedding sherwanis and suits. Known for precision cuts and on-time delivery across Mothabari.",
+    services:[{name:"Sherwani (Plain)",price:"₹900"},{name:"Sherwani (Embroidered)",price:"₹1500"},{name:"2-Piece Suit",price:"₹700"},{name:"Kurta-Pyjama Set",price:"₹300"}],
+    customerReviews:[{author:"Rahul Sharma",stars:"★★★★★",text:"Perfect sherwani for my wedding. Atif bhai took exact measurements and delivered 2 days early!"},{author:"Imran Ali",stars:"★★★★★",text:"Best suit tailor in Mothabari. Very professional and affordable."}]
+  },
+  {
+    id:2, name:"Razia Begum", initials:"RB", color:"#9b59b6",
+    state:"West Bengal", district:"Uttar Dinajpur", pin:"733210", area:"Mothabari",
+    specialty:["Blouse","Lehenga","Salwar"], available:true, verified:true,
+    rating:4.9, reviews:175, exp:12, expLabel:"12 Years",
+    priceRange:"₹150–₹900", priceNum:150, priceLevel:"mid", whatsapp:WA,
+    bio:"Specialist in ladies wear, bridal blouses and embroidered lehengas. Trusted by hundreds of families in Mothabari.",
+    services:[{name:"Blouse Stitching",price:"₹180"},{name:"Salwar Kameez",price:"₹350"},{name:"Party Lehenga",price:"₹750"},{name:"Bridal Blouse",price:"₹400"}],
+    customerReviews:[{author:"Salma Khatun",stars:"★★★★★",text:"My daughter's lehenga was stitched beautifully for her wedding. Found Razia didi through StitchConnect!"},{author:"Nasrin Bibi",stars:"★★★★★",text:"Best blouse stitching in the whole area. Fits perfectly every time."}]
+  },
+  {
+    id:3, name:"Sunita Devi", initials:"SD", color:"#e67e22",
+    state:"West Bengal", district:"Darjeeling", pin:"734010", area:"Siliguri",
+    specialty:["Blouse","Salwar","Kids"], available:true, verified:false,
+    rating:4.7, reviews:132, exp:15, expLabel:"15 Years",
+    priceRange:"₹120–₹500", priceNum:120, priceLevel:"low", whatsapp:WA,
+    bio:"Affordable and reliable stitching for daily wear, school uniforms and kids garments in Siliguri.",
+    services:[{name:"Blouse Stitching",price:"₹140"},{name:"Salwar Kameez",price:"₹280"},{name:"Kids Dress",price:"₹150"},{name:"School Uniform",price:"₹200"}],
+    customerReviews:[{author:"Puja Roy",stars:"★★★★☆",text:"Sunita didi stitches my kids' uniforms every year. Very affordable and neat work."},{author:"Anita Gurung",stars:"★★★★★",text:"Best budget tailor in Siliguri. Never disappointed!"}]
+  },
+  {
+    id:4, name:"Karim Ustad", initials:"KU", color:"#2980b9",
+    state:"West Bengal", district:"Darjeeling", pin:"734011", area:"Matigara",
+    specialty:["Suit","Sherwani","Kurta"], available:false, verified:true,
+    rating:4.8, reviews:280, exp:22, expLabel:"22 Years",
+    priceRange:"₹400–₹2500", priceNum:400, priceLevel:"high", whatsapp:WA,
+    bio:"Senior master tailor with 22 years experience in Matigara. Premium suits, bandhgalas and wedding sherwanis.",
+    services:[{name:"3-Piece Suit",price:"₹1200"},{name:"Bandhgala",price:"₹800"},{name:"Sherwani (Premium)",price:"₹2500"},{name:"Casual Kurta",price:"₹400"}],
+    customerReviews:[{author:"Suresh Agarwal",stars:"★★★★★",text:"Karim ustad is a legend. My wedding suit fit like a glove. Worth every rupee."},{author:"Bikram Das",stars:"★★★★★",text:"Best tailor for formal suits in all of North Bengal."}]
+  },
+  {
+    id:5, name:"Parveen Akhtar", initials:"PA", color:"#16a085",
+    state:"West Bengal", district:"Darjeeling", pin:"734421", area:"Bagdogra",
+    specialty:["Lehenga","Saree","Blouse"], available:true, verified:true,
+    rating:4.9, reviews:98, exp:9, expLabel:"9 Years",
+    priceRange:"₹200–₹1000", priceNum:200, priceLevel:"mid", whatsapp:WA,
+    bio:"Expert in bridal and festive wear in Bagdogra. Known for intricate saree blouses and designer lehengas.",
+    services:[{name:"Designer Blouse",price:"₹350"},{name:"Saree Fall & Pico",price:"₹80"},{name:"Festive Lehenga",price:"₹900"},{name:"Anarkali Suit",price:"₹500"}],
+    customerReviews:[{author:"Meena Tamang",stars:"★★★★★",text:"Parveen stitched my niece's bridal lehenga. Absolutely stunning work!"},{author:"Ritu Sharma",stars:"★★★★★",text:"The best for saree blouses. She understands the fit perfectly."}]
+  },
+  {
+    id:6, name:"Abdul Rahim", initials:"AR", color:"#8e44ad",
+    state:"West Bengal", district:"Jalpaiguri", pin:"735101", area:"Jalpaiguri Town",
+    specialty:["Kurta","Suit","Salwar"], available:true, verified:false,
+    rating:4.5, reviews:64, exp:7, expLabel:"7 Years",
+    priceRange:"₹180–₹700", priceNum:180, priceLevel:"mid", whatsapp:WA,
+    bio:"Young and skilled tailor in Jalpaiguri Town. Quick turnaround, modern designs, great for daily wear.",
+    services:[{name:"Kurta Stitching",price:"₹220"},{name:"Salwar Kameez",price:"₹320"},{name:"Casual Suit",price:"₹600"},{name:"Pyjama Set",price:"₹180"}],
+    customerReviews:[{author:"Farida Begum",stars:"★★★★☆",text:"Abdul bhai delivered my outfit in just 3 days. Clean stitching at a fair price."},{author:"Tarun Das",stars:"★★★★★",text:"Best young tailor in Jalpaiguri. Modern cuts and very friendly."}]
+  },
+  {
+    id:7, name:"Champa Rani", initials:"CR", color:"#c0392b",
+    state:"West Bengal", district:"Jalpaiguri", pin:"735135", area:"Dhupguri",
+    specialty:["Blouse","Salwar","Kids"], available:false, verified:false,
+    rating:4.6, reviews:87, exp:11, expLabel:"11 Years",
+    priceRange:"₹100–₹450", priceNum:100, priceLevel:"low", whatsapp:WA,
+    bio:"Popular in Dhupguri for affordable ladies wear and children's clothing. Reliable and friendly service.",
+    services:[{name:"Plain Blouse",price:"₹120"},{name:"Salwar Kameez",price:"₹300"},{name:"Kids Frock",price:"₹130"},{name:"Night Suit",price:"₹180"}],
+    customerReviews:[{author:"Gita Barman",stars:"★★★★★",text:"Champa didi is our family tailor for 5 years. Excellent work, never delays."},{author:"Minu Das",stars:"★★★★☆",text:"Very affordable. Stitched 4 dresses for my kids and all fit perfectly."}]
+  },
+  {
+    id:8, name:"Nur Islam", initials:"NI", color:"#27ae60",
+    state:"West Bengal", district:"Uttar Dinajpur", pin:"733201", area:"Islampur",
+    specialty:["Kurta","Sherwani","Suit"], available:true, verified:true,
+    rating:4.7, reviews:143, exp:14, expLabel:"14 Years",
+    priceRange:"₹200–₹1200", priceNum:200, priceLevel:"mid", whatsapp:WA,
+    bio:"Well-known in Islampur for quality menswear. Expert in embroidered kurtas and wedding sherwanis.",
+    services:[{name:"Embroidered Kurta",price:"₹450"},{name:"Plain Kurta",price:"₹220"},{name:"Sherwani",price:"₹1100"},{name:"Pathani Suit",price:"₹380"}],
+    customerReviews:[{author:"Sajid Hussain",stars:"★★★★★",text:"Nur bhai's kurtas are famous in Islampur. Quality thread work at great prices."},{author:"Aamir Khan",stars:"★★★★★",text:"Got my Eid sherwani done in 4 days. Brilliant craftsmanship!"}]
+  },
+  {
+    id:9, name:"Lakshmi Sarkar", initials:"LS", color:"#d35400",
+    state:"West Bengal", district:"Cooch Behar", pin:"736101", area:"Cooch Behar Town",
+    specialty:["Saree","Blouse","Lehenga"], available:true, verified:false,
+    rating:4.6, reviews:56, exp:8, expLabel:"8 Years",
+    priceRange:"₹150–₹800", priceNum:150, priceLevel:"mid", whatsapp:WA,
+    bio:"Specializes in traditional Bengali saree blouses and festive lehengas in Cooch Behar Town.",
+    services:[{name:"Saree Blouse",price:"₹200"},{name:"Fall & Pico",price:"₹70"},{name:"Lehenga",price:"₹700"},{name:"Mekhela Chador Blouse",price:"₹250"}],
+    customerReviews:[{author:"Rekha Ghosh",stars:"★★★★★",text:"Best saree blouse tailor I've found. She understands traditional Bengali cuts perfectly."},{author:"Dipali Roy",stars:"★★★★☆",text:"Lakshmi di stitched a beautiful blouse for Durga Puja. Very happy!"}]
+  },
+  {
+    id:10, name:"Sohel Mia", initials:"SM", color:"#2c3e50",
+    state:"West Bengal", district:"Uttar Dinajpur", pin:"733207", area:"Dalkhola",
+    specialty:["Kurta","Salwar","Kids"], available:true, verified:false,
+    rating:4.4, reviews:39, exp:5, expLabel:"5 Years",
+    priceRange:"₹100–₹400", priceNum:100, priceLevel:"low", whatsapp:WA,
+    bio:"Budget-friendly tailor in Dalkhola. Great for everyday wear, school uniforms and family stitching.",
+    services:[{name:"Plain Kurta",price:"₹180"},{name:"Salwar Kameez",price:"₹260"},{name:"Kids Dress",price:"₹120"},{name:"Pant-Shirt Set",price:"₹350"}],
+    customerReviews:[{author:"Halima Bibi",stars:"★★★★☆",text:"Sohel stitches all our family clothes. Very punctual and honest pricing."},{author:"Raju Mandal",stars:"★★★★☆",text:"Good work for the price. Would recommend for everyday stitching."}]
+  },
+];
+
+/* ════ STATE ════ */
+let activeSpec='', curSort='rating', cmpList=[], curId=null, filtered=[...tailors];
+
+/* ════ WA SVG ════ */
+function waSVG(w=15){return`<svg width="${w}" height="${w}" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`}
+
+/* ════ RENDER CARDS ════ */
+function renderCards(data){
+  const g=document.getElementById('grid');
+  document.getElementById('rCount').innerHTML=`<strong>${data.length}</strong> tailor${data.length!==1?'s':''} found`;
+  if(!data.length){g.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--muted)"><div style="font-size:3rem;margin-bottom:1rem">🧵</div><p>No tailors found. Try a different filter.</p></div>`;return;}
+  g.innerHTML=data.map(t=>`
+    <div class="tailor-card" onclick="openModal(${t.id})">
+      <div class="card-top">
+        <span class="badge-spec">${t.specialty[0]}</span>
+        <div class="avail-b ${t.available?'av-yes':'av-no'}"><span class="dot-av"></span>${t.available?'Available':'Busy'}</div>
+        ${t.verified?'<div class="ver-b">✓ Verified</div>':''}
+        <div class="t-avatar" style="background:${t.color}">${t.initials}</div>
+      </div>
+      <div class="card-body">
+        <div class="t-name">${t.name}</div>
+        <div class="t-loc-mini">📍 ${t.area}, ${t.district} · PIN ${t.pin}</div>
+        <div class="loc-pills">
+          <span class="lp state">${t.state}</span>
+          <span class="lp dist">${t.district}</span>
+          <span class="lp pin">${t.pin}</span>
+          <span class="lp area">${t.area}</span>
+        </div>
+        <div class="spec-row">${t.specialty.map(s=>`<span class="spec-tag">${s}</span>`).join('')}</div>
+        <div class="meta-row">
+          <div class="rating"><span class="stars">★★★★★</span> ${t.rating} <span style="color:var(--muted);font-weight:400">(${t.reviews})</span></div>
+          <div class="price-tag">from <strong>${t.priceRange.split('–')[0]}</strong></div>
+        </div>
+        <div class="exp-tag">⏳ ${t.expLabel} experience</div>
+      </div>
+      <div class="card-actions" onclick="event.stopPropagation()">
+        <button class="btn-view" onclick="openModal(${t.id})">View Profile</button>
+        <a class="btn-wa" href="https://wa.me/${t.whatsapp}?text=${encodeURIComponent('Hi '+t.name+'! I found you on StitchConnect and I would like to discuss stitching work.')}" target="_blank" onclick="showT('Opening WhatsApp for '+t.name+'…','')">
+          ${waSVG()}<span>WhatsApp</span>
+        </a>
+      </div>
+    </div>`).join('');
+}
+
+/* ════ TAILOR LIST TABLE ════ */
+function renderListTable(){
+  const tbl=document.getElementById('listTable');
+  tbl.innerHTML=`<tr>
+    <th>#</th><th>Name</th><th>State</th><th>District</th><th>PIN</th><th>Area</th>
+    <th>Specialties</th><th>Price Range</th><th>Rating</th><th>Exp.</th><th>Status</th><th>WhatsApp</th>
+  </tr>`+tailors.map((t,i)=>`<tr>
+    <td style="color:var(--muted)">${i+1}</td>
+    <td><strong>${t.name}</strong>${t.verified?' <span style="color:#3498db;font-size:.7rem">✓</span>':''}</td>
+    <td style="color:#2b6cb0">${t.state}</td>
+    <td style="color:#92400e">${t.district}</td>
+    <td style="color:#166534">${t.pin}</td>
+    <td style="color:#7c4a00;font-weight:600">${t.area}</td>
+    <td>${t.specialty.join(', ')}</td>
+    <td style="color:var(--gold);font-weight:600">${t.priceRange}</td>
+    <td><span class="stars" style="font-size:.75rem">★</span> ${t.rating}</td>
+    <td>${t.expLabel}</td>
+    <td class="tl-av-dot ${t.available?'av-yes':'av-no'}"><span class="dot-av"></span>${t.available?'Available':'Busy'}</td>
+    <td><a class="tl-wa" href="https://wa.me/${t.whatsapp}?text=${encodeURIComponent('Hi '+t.name+'! I found you on StitchConnect.')}" target="_blank" onclick="showT('Opening WhatsApp…','')">${waSVG(13)}&nbsp;Chat</a></td>
+  </tr>`).join('');
+}
+
+/* ════ FILTER ════ */
+function filter(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const di=document.getElementById('distFilter').value;
+  const ar=document.getElementById('areaFilter').value;
+  const pr=document.getElementById('priceFilter').value;
+  filtered=tailors.filter(t=>{
+    const mQ=!q||t.name.toLowerCase().includes(q)||t.specialty.some(s=>s.toLowerCase().includes(q))||t.area.toLowerCase().includes(q);
+    const mD=!di||t.district===di;
+    const mA=!ar||t.area===ar;
+    const mS=!activeSpec||t.specialty.includes(activeSpec);
+    const mP=!pr||(pr==='low'&&t.priceLevel==='low')||(pr==='mid'&&t.priceLevel==='mid')||(pr==='high'&&t.priceLevel==='high');
+    return mQ&&mD&&mA&&mS&&mP;
+  });
+  sort(curSort,false);
+}
+function setSpec(el,sp){document.querySelectorAll('.tag').forEach(t=>t.classList.remove('active'));el.classList.add('active');activeSpec=sp;filter();}
+function sort(by,render=true){
+  curSort=by;const d=[...filtered];
+  if(by==='rating')d.sort((a,b)=>b.rating-a.rating);
+  else if(by==='price_low')d.sort((a,b)=>a.priceNum-b.priceNum);
+  else if(by==='price_high')d.sort((a,b)=>b.priceNum-a.priceNum);
+  else if(by==='exp')d.sort((a,b)=>b.exp-a.exp);
+  renderCards(d);
+}
+
+/* ════ TAILOR MODAL ════ */
+function openModal(id){
+  const t=tailors.find(x=>x.id===id);if(!t)return;curId=id;
+  document.getElementById('mAv').textContent=t.initials;
+  document.getElementById('mAv').style.background=t.color;
+  document.getElementById('mName').textContent=t.name;
+  document.getElementById('mBio').textContent=t.bio;
+  document.getElementById('mSt').textContent=t.state;
+  document.getElementById('mDi').textContent=t.district;
+  document.getElementById('mPi').textContent=t.pin;
+  document.getElementById('mAr').textContent=t.area;
+  document.getElementById('mRat').textContent=`${t.rating} ★ (${t.reviews} reviews)`;
+  document.getElementById('mEx').textContent=t.expLabel;
+  document.getElementById('mPr').textContent=t.priceRange;
+  document.getElementById('mSt2').textContent=t.available?'🟢 Available Now':'🟡 Currently Busy';
+  document.getElementById('mSvcs').innerHTML=t.services.map(s=>`<div class="svc-item"><span>${s.name}</span><span>${s.price}</span></div>`).join('');
+  document.getElementById('mRevs').innerHTML=t.customerReviews.map(r=>`<div class="rev-item"><div class="rev-top"><span class="rev-author">${r.author}</span><span class="rev-stars">${r.stars}</span></div><div class="rev-text">${r.text}</div></div>`).join('');
+  const bkS=document.getElementById('bkS');
+  bkS.innerHTML='<option value="">Select service</option>'+t.services.map(s=>`<option>${s.name} – ${s.price}</option>`).join('');
+  document.getElementById('mWa').href=`https://wa.me/${t.whatsapp}?text=${encodeURIComponent('Hi '+t.name+'! I found your profile on StitchConnect. I\'d like to discuss stitching work.')}`;
+  document.getElementById('mCmpBtn').textContent=cmpList.find(c=>c.id===id)?'✅ Added':'⚖️ Add to Compare';
+  openM('tailorMod');
+}
+
+/* ════ BOOKING ════ */
+function submitBk(){
+  const name=document.getElementById('bkN').value.trim();
+  const ph=document.getElementById('bkP').value.trim();
+  const svc=document.getElementById('bkS').value;
+  const dt=document.getElementById('bkD').value;
+  const note=document.getElementById('bkNote').value.trim();
+  if(!name||!ph||!svc||!dt){showT('Please fill all required fields','err');return;}
+  const t=tailors.find(x=>x.id===curId);
+  const msg=`🧵 *New Booking – StitchConnect*\n\n👤 Customer: ${name}\n📞 Phone: ${ph}\n✂️ Service: ${svc}\n📅 Date: ${dt}${note?'\n📝 Notes: '+note:''}`;
+  window.open(`https://wa.me/${t.whatsapp}?text=${encodeURIComponent(msg)}`,'_blank');
+  showT('Booking sent via WhatsApp! ✅','');
+}
+
+/* ════ COMPARE ════ */
+function addCmp(){
+  const t=tailors.find(x=>x.id===curId);
+  if(cmpList.find(c=>c.id===t.id)){showT('Already in compare list','dark');return;}
+  if(cmpList.length>=2){showT('Max 2 tailors. Clear one first.','err');return;}
+  cmpList.push(t);updateCmpBar();
+  document.getElementById('mCmpBtn').textContent='✅ Added';
+  showT(`${t.name} added to compare!`,'dark');
+}
+function updateCmpBar(){
+  [0,1].forEach(i=>{
+    const sl=document.getElementById('cs'+i);
+    if(cmpList[i]){sl.className='cslot filled';sl.innerHTML=`${cmpList[i].name}<button class="rm-c" onclick="rmCmp(${i})">✕</button>`;}
+    else{sl.className='cslot';sl.textContent=`Empty slot ${i+1}`;}
+  });
+  document.getElementById('cmpBar').classList.toggle('show',cmpList.length>0);
+  document.getElementById('btnDoCmp').disabled=cmpList.length<2;
+}
+function rmCmp(i){cmpList.splice(i,1);updateCmpBar();}
+function clearCmp(){cmpList=[];updateCmpBar();}
+function doCmp(){
+  if(cmpList.length<2)return;
+  const [a,b]=cmpList;
+  const rows=[
+    ['Name',a.name,b.name],['State',a.state,b.state],['District',a.district,b.district],
+    ['PIN',a.pin,b.pin],['Area',a.area,b.area],['Rating',`${a.rating}★ (${a.reviews})`,`${b.rating}★ (${b.reviews})`],
+    ['Experience',a.expLabel,b.expLabel],['Price',a.priceRange,b.priceRange],
+    ['Specialties',a.specialty.join(', '),b.specialty.join(', ')],
+    ['Verified',a.verified?'✅ Yes':'❌ No',b.verified?'✅ Yes':'❌ No'],
+    ['Available',a.available?'🟢 Yes':'🟡 Busy',b.available?'🟢 Yes':'🟡 Busy'],
+    ['WhatsApp','WA_A','WA_B'],
+  ];
+  document.getElementById('cmpTbl').innerHTML=
+    `<tr><th>Feature</th><th>${a.name}</th><th>${b.name}</th></tr>`+
+    rows.map(([l,va,vb])=>{
+      const ca=va==='WA_A'?`<td><a class="wa-link" href="https://wa.me/${a.whatsapp}?text=${encodeURIComponent('Hi '+a.name+'! I found you on StitchConnect.')}" target="_blank">${waSVG(13)}&nbsp;Chat</a></td>`:`<td>${va}</td>`;
+      const cb=vb==='WA_B'?`<td><a class="wa-link" href="https://wa.me/${b.whatsapp}?text=${encodeURIComponent('Hi '+b.name+'! I found you on StitchConnect.')}" target="_blank">${waSVG(13)}&nbsp;Chat</a></td>`:`<td>${vb}</td>`;
+      return`<tr><td><strong>${l}</strong></td>${ca}${cb}</tr>`;
+    }).join('');
+  openM('cmpMod');
+}
+
+/* ════ REGISTER ════ */
+function openReg(){openM('regMod')}
+function submitReg(){
+  const n=document.getElementById('rN').value.trim(),ph=document.getElementById('rPh').value.trim(),ar=document.getElementById('rAr').value.trim(),sp=document.getElementById('rSp').value.trim();
+  if(!n||!ph||!ar||!sp){showT('Please fill all required fields','err');return;}
+  const msg=`🧵 *New Tailor Registration – StitchConnect*\n\n👤 Name: ${n}\n📞 WhatsApp: ${ph}\n🗺 State: ${document.getElementById('rSt').value}\n🏙 District: ${document.getElementById('rDi').value}\n📮 PIN: ${document.getElementById('rPi').value}\n📍 Area: ${ar}\n✂️ Specialties: ${sp}\n💰 Price Range: ${document.getElementById('rPr').value}\n⏳ Experience: ${document.getElementById('rEx').value} yrs`;
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
+  showT('Registration sent to admin! ✅','');closeM('regMod');
+}
+
+/* ════ MODAL HELPERS ════ */
+function openM(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeM(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+function closeOut(e,id){if(e.target===document.getElementById(id))closeM(id);}
+
+/* ════ TOAST ════ */
+let tt;
+function showT(msg,type){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show'+(type?' '+type:'');
+  clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+/* ════ INIT ════ */
+filter();
+renderListTable();
+document.getElementById('bkD').min=new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
